@@ -5,26 +5,26 @@ module.exports = (sequelize, DataTypes) => {
   // This section contains the fields of your model, mapped to your table's columns.
   // Learn more here: https://docs.forestadmin.com/documentation/reference-guide/models/enrich-your-models#declaring-a-new-field-in-a-model
   const Doctors = sequelize.define('doctors', {
-    // isActive: {
-    //   type: DataTypes.BOOLEAN,
-    // },
-    // doctorType: {
-    //   type: DataTypes.STRING,
-    // },
-    // createdAt: {
-    //   type: DataTypes.DATEONLY,
-    // },
-    // email: {
-    //   type: DataTypes.STRING,
-    // },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+    },
+    doctorType: {
+      type: DataTypes.STRING,
+    },
+    createdAt: {
+      type: DataTypes.DATEONLY,
+    },
+    email: {
+      type: DataTypes.STRING,
+    },
     firstName: {
       type: DataTypes.STRING,
       field: 'firstName',
     },
-    // lastName: {
-    //   type: DataTypes.STRING,
-    //   field: 'lastName',
-    // },
+    lastName: {
+      type: DataTypes.STRING,
+      field: 'lastName',
+    },
   }, {
     tableName: 'Doctors',
     timestamps: false,

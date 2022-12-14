@@ -2,6 +2,7 @@ const express = require('express');
 const { PermissionMiddlewareCreator } = require('forest-express-sequelize');
 const { doctors } = require('../models');
 const { faker } = require('@faker-js/faker');
+const {prescriptions} = require('../models');
 
 const router = express.Router();
 const permissionMiddlewareCreator = new PermissionMiddlewareCreator('doctors');
@@ -59,21 +60,23 @@ router.delete('/doctors', permissionMiddlewareCreator.delete(), (request, respon
   next();
 });
 
-router.post('/actions/add-fake-doctor',  permissionMiddlewareCreator.smartAction(), (req, res) => {
+router.post('/actions/add-fake-doctor',  permissionMiddlewareCreator.smartAction(), async(req, res) => {
   for ( let i = 0; i< 10< 10; i++) {
     const firstName = faker.name.firstName();
-      // const lastName = faker.name.lastName();
-      // const emailDomains = ["gmail.com", "yahoo.fr", "example.com", "hotmail.com"]
-      // const randomEmailDomain= emailDomains[Math.floor(Math.random() * emailDomains.length)];
-      // const startAt = new Date(faker.date.recent());
-
+      const lastName = faker.name.lastName();
+      const emailDomains = ["gmail.com", "yahoo.fr", "example.com", "hotmail.com"]
+      const randomEmailDomain= emailDomains[Math.floor(Math.random() * emailDomains.length)];
+      const startAt = new Date(faker.date.recent());
+      const rand = Boolean(Math.round(Math.random()));
+      const randomPrescriptions =await getRandomInstance(prescriptions)
 
     doctors.create({
       firstName:firstName,
-      // lastName:lastName,
-      // createdAt:startAt,
-      // email: faker.internet.email(firstName.toLowerCase(), lastName.toLowerCase(), randomEmailDomain),
-
+      lastName:lastName,
+      createdAt:startAt,
+      email: faker.internet.email(firstName.toLowerCase(), lastName.toLowerCase(), randomEmailDomain),
+      isActive:rand,
+      doctorsIdKey:randomPrescriptions.id,
     })
     .then(() => {
       res.send({

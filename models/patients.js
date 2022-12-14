@@ -7,11 +7,11 @@ module.exports = (sequelize, DataTypes) => {
   const Patients = sequelize.define('patients', {
     firstName: {
       type: DataTypes.STRING,
-      field: 'FirstName',
+      field: 'firstName',
     },
     lastName: {
       type: DataTypes.STRING,
-      field: 'LastName',
+      field: 'lastName',
     },
     dateOfBirth: {
       type: DataTypes.DATEONLY,

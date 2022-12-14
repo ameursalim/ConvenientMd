@@ -1,6 +1,9 @@
 const express = require('express');
 const { PermissionMiddlewareCreator } = require('forest-express-sequelize');
 const { patients } = require('../models');
+const { faker } = require('@faker-js/faker');
+const { documents } = require('../models');
+const {prescriptions}= require('../models')
 
 const router = express.Router();
 const permissionMiddlewareCreator = new PermissionMiddlewareCreator('patients');
@@ -57,5 +60,34 @@ router.delete('/patients', permissionMiddlewareCreator.delete(), (request, respo
   // Learn what this route does here: https://docs.forestadmin.com/documentation/reference-guide/routes/default-routes#delete-a-list-of-records
   next();
 });
+
+router.post('/actions/add-fake-doctor',  permissionMiddlewareCreator.smartAction(), async(req, res) => {
+  for ( let i = 0; i< 10< 10; i++) {
+    const firstName = faker.name.firstName();
+      const lastName = faker.name.lastName();
+      const emailDomains = ["gmail.com", "yahoo.fr", "example.com", "hotmail.com"]
+      const randomEmailDomain= emailDomains[Math.floor(Math.random() * emailDomains.length)];
+      const startAt = new Date(faker.date.recent());
+      const rand = Boolean(Math.round(Math.random()));
+      const randomDocuments =await getRandomInstance(documents)
+      const randomPrescriptions =await getRandomInstance(prescriptions)
+
+    patients.create({
+      firstName:firstName,
+      lastName:lastName,
+      createdAt:startAt,
+      email: faker.internet.email(firstName.toLowerCase(), lastName.toLowerCase(), randomEmailDomain),
+      isActive:rand,
+      patientIdKey:randomDocuments.id,
+      patientIdKey:randomPrescriptions.id
+    })
+    .then(() => {
+      res.send({
+        success:"well done the doctor have been created "
+      })
+    })
+  }
+
+}) 
 
 module.exports = router;
