@@ -61,7 +61,7 @@ router.delete('/patients', permissionMiddlewareCreator.delete(), (request, respo
   next();
 });
 
-router.post('/actions/add-fake-doctor',  permissionMiddlewareCreator.smartAction(), async(req, res) => {
+router.post('/actions/add-fake-patient',  permissionMiddlewareCreator.smartAction(), async(req, res) => {
   for ( let i = 0; i< 10< 10; i++) {
     const firstName = faker.name.firstName();
       const lastName = faker.name.lastName();
@@ -69,8 +69,8 @@ router.post('/actions/add-fake-doctor',  permissionMiddlewareCreator.smartAction
       const randomEmailDomain= emailDomains[Math.floor(Math.random() * emailDomains.length)];
       const startAt = new Date(faker.date.recent());
       const rand = Boolean(Math.round(Math.random()));
-      const randomDocuments =await getRandomInstance(documents)
-      const randomPrescriptions =await getRandomInstance(prescriptions)
+      // const randomDocuments =await getRandomInstance(documents)
+      // const randomPrescriptions =await getRandomInstance(prescriptions)
 
     patients.create({
       firstName:firstName,
@@ -78,8 +78,8 @@ router.post('/actions/add-fake-doctor',  permissionMiddlewareCreator.smartAction
       createdAt:startAt,
       email: faker.internet.email(firstName.toLowerCase(), lastName.toLowerCase(), randomEmailDomain),
       isActive:rand,
-      patientIdKey:randomDocuments.id,
-      patientIdKey:randomPrescriptions.id
+      // patientIdKey:randomDocuments.id,
+      // patientIdKey:randomPrescriptions.id
     })
     .then(() => {
       res.send({

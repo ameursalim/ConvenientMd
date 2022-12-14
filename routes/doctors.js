@@ -68,7 +68,7 @@ router.post('/actions/add-fake-doctor',  permissionMiddlewareCreator.smartAction
       const randomEmailDomain= emailDomains[Math.floor(Math.random() * emailDomains.length)];
       const startAt = new Date(faker.date.recent());
       const rand = Boolean(Math.round(Math.random()));
-      const randomPrescriptions =await getRandomInstance(prescriptions)
+      // const randomPrescriptions =await getRandomInstance(prescriptions)
 
     doctors.create({
       firstName:firstName,
@@ -76,7 +76,7 @@ router.post('/actions/add-fake-doctor',  permissionMiddlewareCreator.smartAction
       createdAt:startAt,
       email: faker.internet.email(firstName.toLowerCase(), lastName.toLowerCase(), randomEmailDomain),
       isActive:rand,
-      doctorsIdKey:randomPrescriptions.id,
+      // doctorsIdKey:randomPrescriptions.id,
     })
     .then(() => {
       res.send({
