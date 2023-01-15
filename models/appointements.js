@@ -4,58 +4,42 @@ module.exports = (sequelize, DataTypes) => {
   const { Sequelize } = sequelize;
   // This section contains the fields of your model, mapped to your table's columns.
   // Learn more here: https://docs.forestadmin.com/documentation/reference-guide/models/enrich-your-models#declaring-a-new-field-in-a-model
-  const Patients = sequelize.define('patients', {
-    firstName: {
-      type: DataTypes.STRING,
-      field: 'FirstName',
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      field: 'LastName',
-    },
-    dateOfBirth: {
-      type: DataTypes.DATEONLY,
-      field: 'DateOfBirth',
-    },
-    email: {
-      type: DataTypes.STRING,
-    },
-    documents: {
-      type: DataTypes.STRING,
-    },
-    city: {
-      type: DataTypes.STRING,
-      field: 'City',
-    },
-    coutry: {
-      type: DataTypes.STRING,
-    },
+  const Appointements = sequelize.define('appointements', {
     createdAt: {
       type: DataTypes.DATEONLY,
     },
+    endAt: {
+      type: DataTypes.DATE,
+    },
+    name: {
+      type: DataTypes.STRING,
+    },
+    startAt: {
+      type: DataTypes.DATE,
+    },
   }, {
-    tableName: 'Patients',
+    tableName: 'Appointements ',
     timestamps: false,
     schema: process.env.DATABASE_SCHEMA,
   });
 
   // This section contains the relationships for this model. See: https://docs.forestadmin.com/documentation/reference-guide/relationships#adding-relationships.
-  Patients.associate = (models) => {
-    Patients.hasMany(models.documents, {
+  Appointements.associate = (models) => {
+    Appointements.belongsTo(models.doctors, {
+      foreignKey: {
+        name: 'doctorIdKey',
+        field: 'doctorId',
+      },
+      as: 'doctor',
+    });
+    Appointements.belongsTo(models.patients, {
       foreignKey: {
         name: 'patientIdKey',
-        field: 'PatientId',
+        field: 'patientId',
       },
-      as: 'patientDocuments',
-    });
-    Patients.hasMany(models.prescriptions, {
-      foreignKey: {
-        name: 'patientsIdKey',
-        field: 'patientsId',
-      },
-      as: 'patientsPrescriptions',
+      as: 'patient',
     });
   };
 
-  return Patients;
+  return Appointements;
 };

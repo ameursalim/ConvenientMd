@@ -12,6 +12,13 @@ module.exports = (sequelize, DataTypes) => {
     adresse: {
       type: DataTypes.STRING,
     },
+    latitude: {
+      type: DataTypes.DOUBLE,
+    },
+    longitudes: {
+      type: DataTypes.DOUBLE,
+      field: 'longitudes ',
+    },
   }, {
     tableName: 'location',
     timestamps: false,
