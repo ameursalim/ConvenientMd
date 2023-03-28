@@ -125,7 +125,7 @@ router.post('/actions/add-fake-patient',  permissionMiddlewareCreator.smartActio
     return patients.create(patientToCreate);
   }));
 
-  res.status(200).send({ success: 'Doctors successfully created' });
+  res.status(200).send({ success: 'Patient successfully created' });
 })
 
 module.exports = router;
